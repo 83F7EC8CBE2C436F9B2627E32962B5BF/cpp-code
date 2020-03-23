@@ -42,7 +42,6 @@ TEST(Suite1, Test1)
     for (int d : list) {
         std::cout << d << std::endl;
     }
-    //std::cout << list.removeAll(5) << std::endl;
     EXPECT_EQ(list.removeAll(1), 1);
 
 }
