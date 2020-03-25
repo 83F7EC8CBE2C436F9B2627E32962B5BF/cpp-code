@@ -1,4 +1,5 @@
 #include <iostream>
+#include <functional>
 
 template <typename T>
 class Link {
@@ -8,9 +9,11 @@ class Link {
     Node *next;
   };
   Node *head;
+  Node *tail;
+  int size;
 
  public:
-  Link() : head(nullptr) {}
+  Link() : head(nullptr), tail(nullptr), size(0) {}
   ~Link() {
     Node *p = head;
     for (; p != nullptr;) {
@@ -19,15 +22,87 @@ class Link {
       delete[] t;
     }
   }
-  void insert(T data) {
-    Node *node = new Node();
-    node->data = data;
-    node->next = head;
-    head = node;
+  bool IsEmpty() { return 0 == size; }
+
+  T get(int index) {
+    if (index > size || index < 0) exit(1);
+    Node *p = head;
+    for (int i = 0; i < index; i++) {
+      p = p->next;
+    }
+    return p->data;
+  }
+
+  bool set(int index, T data) {
+    if (index > size || index < 0) exit(1);
+    Node *p = head;
+    for (int i = 0; i < index; i++) {
+      p = p->next;
+    }
+    p->data = data;
+
+    return true;
+  }
+  void insert(int index, T data) {
+    if (index < 0 || index > size) exit(1);
+    Node *NewNode = new Node();
+    NewNode->data = data;
+    if (0 == index) {
+      NewNode->next = head;
+      head = NewNode;
+      size++;
+    } else {
+      Node *p = head;
+      for (int i = 0; i < index - 1; i++) p = p->next;
+      NewNode->next = p->next;
+      p->next = NewNode;
+      size++;
+    }
+    Node *p = head;
+    while (p->next != nullptr) {
+      p = p->next;
+    }
+    tail = p;
+  }
+  T remove(int index) {
+    if (index < 0 || index > size) exit(1);
+    Node *p = head;
+    if (0 == index) {
+      T data = head->data;
+      head = head->next;
+      free(p);
+      size--;
+      return data;
+    }
+    for (int i = 0; i < index - 1; i++) p = p->next;
+    Node *q = p->next;
+    T data = q->data;
+    p->next = q->next;
+    free(q);
+    size--;
+    return data;
+  }
+
+  int removeAll(T const &data) {
+    Node *p = head;
+    int count = 0;
+    int i = 0;
+    while (i < size - 2) {
+      if (data == get(i)) {
+        remove(i);
+        p = head;
+        i = 0;
+        count++;
+      } else {
+        p = p->next;
+        i++;
+      }
+    }
+    return count;
   }
   void traversal(std::function<void(T)> visit) {
-    for (Node *node = head; node != nullptr; node = node -> next) {
-      visit(node -> data);
+    for (Node *node = head; node != nullptr; node = node->next) {
+      visit(node->data);
     }
   }
   class iterator {
