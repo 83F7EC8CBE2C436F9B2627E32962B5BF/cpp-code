@@ -1,5 +1,5 @@
 #ifndef SEQUENTIALLISTSTACK_H_
-#define SEQUENTIALLISTSTACK_H
+#define SEQUENTIALLISTSTACK_H_
 
 #include "SequetialList.h"
 

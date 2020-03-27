@@ -1,18 +1,14 @@
 #include "SequentialListStack.h"
-#include "SequetialList.h"
+#include "Match.h"
 #include "gtest/gtest.h"
+#include <iostream>
 
 TEST(Suite1, Test1) {
-  Stack<int> list;
-  for (int i = 5; i > 0;i--) {
-    list.Push(i);
-  }
-
-  EXPECT_EQ(list.Peek(), 1);
-  EXPECT_EQ(list.Pop(), 1);
-  list.clear();
-  EXPECT_TRUE(list.IsEmpty());
-
+  std::string text = "{[({})]}}";
+  std::string text2 = "{[({})]}";
+  Match match;
+  EXPECT_FALSE(match.BracketMatch(text));
+  EXPECT_FALSE(match.BracketMatch(text2));
 }
 
 int main(int argc, char **argv) {
