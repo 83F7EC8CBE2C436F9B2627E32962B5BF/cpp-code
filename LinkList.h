@@ -104,6 +104,9 @@ class Link {
     }
     return count;
   }
+  int getsize() {
+    return size;
+  }
   void traversal(std::function<void(T)> visit) {
     for (Node *node = head; node != nullptr; node = node->next) {
       visit(node->data);
