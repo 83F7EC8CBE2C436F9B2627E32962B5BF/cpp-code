@@ -1,5 +1,5 @@
-#include <iostream>
 #include <functional>
+#include <iostream>
 
 template <typename T>
 class Link {
@@ -84,19 +84,23 @@ class Link {
   }
 
   int removeAll(T const &data) {
-    Node *p = head;
     int count = 0;
     int i = 0;
-    while (i < size - 2) {
+    while (i < size - 1) {
       if (data == get(i)) {
         remove(i);
-        p = head;
         i = 0;
         count++;
       } else {
-        p = p->next;
         i++;
       }
+    }
+    return count;
+  }
+  int contains(T data) {
+    int count = 0;
+    for (int i = 0; i < size; i++) {
+      if (data == get(i)) count++;
     }
     return count;
   }
