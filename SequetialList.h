@@ -69,6 +69,9 @@ class SequentialList {
   void traversal(const std::function<void(const T &)> &visit) {
     for (int i = 0; i < size; i++) visit(*arr + i);
   }
+  int getsize() {
+    return size;
+  }
   class iterator {
    private:
     T *node;
